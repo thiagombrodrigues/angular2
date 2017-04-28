@@ -1,0 +1,132 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a routerLink="/simulacao" routerLinkActive="active">Simulação</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Diárias <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="changeRoute('/diarias')" class="dropdown-item">Agenda de Viagens</a></li>
+                        <li><a href="#">Avaliar Prestação de Contas</a></li>
+                        <li><a href="#">Gestor de Bilhetes Aéreos</a></li>
+                        <li><a href="#">Gestor de Devoluções</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Gestor de Diárias</a></li>
+                        <li><a href="#">Gestor de Diárias - Administrativo</a></li>
+                        <li><a href="#">Gestor de Itinerários</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Gestor de Pagamentos</a></li>
+                        <li><a href="#">Tabela de Diárias e Cargos</a></li>
+                        <li><a href="#">Configurações</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Almoxarifado <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="changeRoute('/solicitacao-almoxarifado')" class="dropdown-item">Solicitação</a></li>
+                        <li><a href="#">Grupos Espécies</a></li>
+                        <li><a href="#">Gestor de Solicitações</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Gestor de Almoxarifado</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Configurações</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Patrimônio <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="changeRoute('/patrimonio')" class="dropdown-item">Avaliação Patrimonial</a></li>
+                        <li><a href="#">Contas Patrimoniais</a></li>
+                        <li><a href="#">Gestão Patrimonial</a></li>
+                        <li><a href="#">Gestor de Inventários</a></li>
+                        <li><a href="#">Grupos Espécies</a></li>
+                        <li><a href="#">Localizações Patrimoniais</a></li>
+                        <li><a href="#">Sequência Patrimonial</a></li>
+                        <li><a href="#">Tabela de Avaliação</a></li>
+                        <li><a href="#">Configurações</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Dropdown <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="page animsition">
+    <div class="page-header">
+        <h1 class="page-title text-capitalize">Gestão Administrativa</h1>
+        <div class="page-header-actions">
+            <button type="button" (click)="addTab()" class="btn btn-sm btn-icon btn-info btn-round waves-effect waves-light waves-round">
+                <i class="icon md-plus" aria-hidden="true"></i>
+            </button>
+            <button type="button" (click)="refreshTab()" class="btn btn-sm btn-icon btn-info btn-round waves-effect waves-light waves-round">
+                <i class="icon md-refresh-alt" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-icon btn-info btn-round waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Setting">
+                <i class="icon md-settings" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="panel">
+            <div class="panel-body">
+                <tabset>
+                    <tab *ngFor="let item of abas_disponiveis; let index = index"
+                        [heading]="item.title"
+                        [active]="item.active"
+                        [disabled]="item.disabled"
+                        (select)="tabSelected(item)"
+                        (deselect)="item.active = false"
+                        (removed)="removeTabHandler(item)"
+                        removable="true" id="tab-{{index}}">
+
+                        <div *ngIf="carregando_url" class="loader-wrapper loader-sm active margin-top-10">
+                            <div class="loader-layer loader-blue-only">
+                                <div class="loader-circle-left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="loader-circle-gap"></div>
+                                <div class="loader-circle-right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <router-outlet></router-outlet>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>

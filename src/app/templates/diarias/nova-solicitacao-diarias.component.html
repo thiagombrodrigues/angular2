@@ -1,0 +1,29 @@
+Nova solicitação
+
+<span (click)='onClick()'>Click me please!</span>  
+
+<!--
+<div>
+    <h3>Sender
+      <button (click)="toggleSubscribed()">
+        {{unsubscribed && 'Subscribe' || 'Unsubscribe'}}
+      </button>
+    </h3>
+    <button (click)="send()">Send Message</button>
+    <h4 *ngIf="messages.length">
+      Incoming Messages
+      <button (click)="clear()">x</button>
+    </h4>
+    <ul>
+      <li *ngFor="let message of messages">Response: {{message}}</li>
+    </ul>
+</div>
+-->
+
+
+<div class="zippy">
+    <div (click)="toggle()">Toggle</div>
+    <div [hidden]="!visible">
+      <ng-content></ng-content>
+    </div>
+ </div>

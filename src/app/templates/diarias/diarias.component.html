@@ -1,0 +1,29 @@
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Basic Angular 2</h3>
+            </div>
+        </div>
+        <div>
+            <a (click)="abrirLink()">Link</a>
+            <h2>Mission Control</h2>
+            <button (click)="announce()">Announce mission</button>
+        </div>
+
+        <div>
+            <router-outlet name="outlet-modal"></router-outlet>
+        </div>
+    </div>
+</div>
+
+
+<!--
+<my-astronaut *ngFor="let astronaut of astronauts"
+  [astronaut]="astronaut">
+</my-astronaut>
+<h3>History</h3>
+<ul>
+  <li *ngFor="let event of history">{{event}}</li>
+</ul>
+-->

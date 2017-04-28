@@ -1,0 +1,25 @@
+.space-box-10
+{
+    margin: 10px 10px 10px 10px;
+}
+.top-menu-button
+{
+    min-width: 120px;
+}
+.modal-xl
+{
+    width:75%
+}
+.modal-body
+{
+    height: 100%;
+    overflow-y: auto;
+}
+.modal-nested
+{
+    border: 1px solid #DFDFDF;
+}
+.btn-search
+{
+    height: 35px;
+}

@@ -1,0 +1,13 @@
+ <div bsModal #modal_principal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">{{titulo_modal}}</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modal_principal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <router-outlet name="outlet-modal"></router-outlet>
+        </div>
+    </div>
+</div>

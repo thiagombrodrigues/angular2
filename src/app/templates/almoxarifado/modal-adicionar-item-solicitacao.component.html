@@ -1,0 +1,45 @@
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-nested">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Adicionar novo item</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 form-group">
+                        <label class="control-label" for="especie-novo-item">Espécie</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon md-search" aria-hidden="true"></i></span>
+
+                            <select class="form-control" [(ngModel)]="item_solicitacao.especie" required> 
+                                <option *ngFor="let especie of especies_almoxarifado" [value]="especie.id">
+                                    {{especie.titulo}}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 form-group">
+                        <label class="control-label">Quantidade</label>
+                        <input [(ngModel)]="item_solicitacao.quantidade" type="number" class="form-control" />
+                    </div>
+                    <div class="col-lg-3 form-group">
+                        <label class="control-label">Unidade Medida</label>
+                        <select class="form-control" [(ngModel)]="item_solicitacao.unidade_medida" required>
+                            <option *ngFor="let unidade of unidades_medida" [value]="unidade[0]">
+                                {{unidade[1]}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="modal.hide()">Cancelar</button>
+                <button type="button" class="btn btn-primary" autofocus (click)="adicionarItemSolicitacaoAlmoxarifado()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>

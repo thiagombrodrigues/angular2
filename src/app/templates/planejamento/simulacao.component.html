@@ -1,0 +1,73 @@
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Simulação</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 form-group">
+                <label class="control-label" for="descricao">Descrição</label>
+                <input type="text" class="form-control" id="descricao" placeholder="Descrição">
+            </div>
+            <div class="col-lg-3 form-group">
+                <label class="control-label">Aplicar cenário</label>
+                <select class="form-control" [(ngModel)]="model.cenario" required>
+                    <option *ngFor="let unidade of unidades_medida" [value]="unidade[0]">
+                        {{unidade[1]}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-lg-3 form-group">
+                <label class="control-label">Data limite (mês)</label>
+                <select class="form-control" [(ngModel)]="model.mes_data_limite" required>
+                    <option *ngFor="let mes of meses" [value]="mes[0]">
+                        {{mes[1]}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-lg-3 form-group">
+                <label class="control-label">Data limite (ano)</label>
+                <input type="number" [(ngModel)]="model.ano_data_limite" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 form-group">
+                <label class="control-label" for="descricao">Percentual de reajuste</label>
+                <input type="number" [(ngModel)]="model.percentual_reajuste" class="form-control" id="percentual_reajuste" placeholder="%">
+            </div>
+            <div class="col-lg-9 form-group">
+                <label class="control-label">Incluir no cenário</label>
+                <ng-select
+                    [(ngModel)]="model.cenarios"
+                    [options]="opcoes_cenarios"
+                    [multiple]="true"
+                    placeholder="Selecione as opções">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                <label class="control-label">Servidores impactados</label>
+                <ng-select
+                    [(ngModel)]="model.servidores_impactados"
+                    [options]="opcoes_servidores_impactados"
+                    [multiple]="true"
+                    placeholder="Selecione as opções">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-danger">
+                        <i class="icon md-stop margin-right-10" aria-hidden="true"></i>Cancelar
+                    </button>
+                    <button type="button" (click)="gerarSimulacao()" class="btn btn-info">
+                        <i class="icon md-play margin-right-10" aria-hidden="true"></i><span class="margin-right-15">Gerar </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

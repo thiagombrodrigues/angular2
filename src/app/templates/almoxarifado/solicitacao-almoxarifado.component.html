@@ -1,0 +1,176 @@
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Solicitações de almoxarifado</h3>
+            </div>
+            <div class="col-lg-6">
+                <div class="btn-group pull-right" aria-label="Button group with nested dropdown" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle waves-effect waves-light" id="btn-gerenciamento" data-toggle="dropdown" aria-expanded="false">Gerenciamento <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="btn-gerenciamento" role="menu">
+                            <li role="presentation">
+                                <a
+                                    (click)="outlet_modal.show('Nova solicitação', '/solicitacao-almoxarifado', {'outlet-modal': ['nova-solicitacao']})"
+                                    class="waves-effect waves-classic"
+                                    role="menuitem">
+                                    
+                                    <i class="icon md-menu" aria-hidden="true"></i> Nova solicitação
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    <i class="icon md-delete" aria-hidden="true"></i> Arquivar solicitação
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle waves-effect waves-light" id="btn-relatorios" data-toggle="dropdown" aria-expanded="false">Relatórios <span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="btn-relatorios" role="menu">
+                            <li role="presentation"><a href="javascript:void(0)" role="menuitem">Dropdown link</a></li>
+                            <li role="presentation"><a href="javascript:void(0)" role="menuitem">Dropdown link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle waves-effect waves-light pull-right" id="btn-filtros" data-toggle="dropdown" aria-expanded="false">Filtros <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="btn-filtros" role="menu">
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    Todos
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    <span class="badge badge-default margin-left-10">E</span>
+                                    Em análise
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    <span class="badge badge-warning margin-left-10">P</span>
+                                    Parcialmente atendido
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    <span class="badge badge-success margin-left-10">T</span>
+                                    Totalmente atendido
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" class="waves-effect waves-classic">
+                                    <span class="badge badge-danger margin-left-10">A</span>
+                                    Arquivada
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="erros" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <i class="icon md-alert-circle" aria-hidden="true"></i> {{erros}}
+        </div>
+
+        <div [hidden]="erros" class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Identificador</td>
+                        <td>Ações</td>
+                        <td>Servidor</td>
+                        <td>Atendente</td>
+                        <td>Itens solicitados</td>
+                        <td>Data solicitação</td>
+                        <td>Data resposta</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitacao of solicitacoes_almoxarifado">
+                        <td>{{solicitacao.id}}</td>
+                        <td>
+                            <button
+                                *ngIf="solicitacao.finalizado; else icone_leitura"
+                                (click)="outlet_modal.show('Visualizar solicitação', '/solicitacao-almoxarifado', {'outlet-modal': [solicitacao.id]})"
+                                class="btn btn-sm btn-icon btn-pure btn-default waves-effect waves-classic"
+                                tooltip="Visualizar"
+                                type="button">
+
+                                <i class="icon md-search" aria-hidden="true"></i>
+                            </button>                                
+                            <ng-template #icone_leitura>
+                                <button 
+                                    (click)="outlet_modal.show('Editar solicitação', '/solicitacao-almoxarifado', {'outlet-modal': [solicitacao.id]})"
+                                    class="btn btn-sm btn-icon btn-pure btn-default waves-effect waves-classic"
+                                    tooltip="Editar"
+                                    type="button">
+
+                                    <i class="icon md-wrench" aria-hidden="true"></i>
+                                </button>
+                            </ng-template>
+
+                            <button
+                                (click)="excluirSolicitacao(solicitacao)"
+                                type="button"
+                                tooltip="Excluir"
+                                class="btn btn-sm btn-icon btn-pure btn-default waves-effect waves-classic">
+
+                                <i class="icon md-close" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        <td>{{solicitacao.servidor}}</td>
+                        <td>{{solicitacao.atendente}}</td>
+                        <td>{{solicitacao.itens_solicitacoes.length}}</td>
+                        <td>{{solicitacao.data_solicitacao}}</td>
+                        <td>{{solicitacao.data_resposta}}</td>
+                        <td>
+                            <span *ngIf="solicitacao.status == 1" class="badge badge-default" tooltip="{{solicitacao.status_display}}">E</span>
+                            <span *ngIf="solicitacao.status == 2" class="badge badge-warning" tooltip="{{solicitacao.status_display}}">P</span>
+                            <span *ngIf="solicitacao.status == 3" class="badge badge-success" tooltip="{{solicitacao.status_display}}">T</span>
+                            <span *ngIf="solicitacao.status == 8" class="badge badge-danger" tooltip="{{solicitacao.status_display}}">A</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="fixed-table-pagination">
+                <div class="pull-left pagination-detail">
+                    <div class="columns columns-right btn-group pull-right">
+                        <button class="btn btn-primary btn-icon btn-search waves-effect waves-light" type="button" name="refresh" title="Atualizar">
+                            <i class="icon md-refresh"></i>
+                        </button>
+                    </div>
+                    <div class="pull-right search">
+                        <input class="form-control input-icon" type="text" placeholder="Pesquisar">
+                    </div>
+                </div>
+                <div class="pull-right pagination">
+                    <ul class="pagination">
+                        <li class="page-pre">
+                            <a href="javascript:void(0)">‹</a>
+                        </li>
+                        <li class="page-number active">
+                            <a href="javascript:void(0)">1</a>
+                        </li>
+                        <li class="page-number">
+                            <a href="javascript:void(0)">2</a>
+                        </li>
+                        <li class="page-number">
+                            <a href="javascript:void(0)">3</a>
+                        </li>
+                        <li class="page-next"><a href="javascript:void(0)">›</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<outlet-modal #outlet_modal></outlet-modal>
